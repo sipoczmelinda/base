@@ -3,14 +3,18 @@ package hu.bme.mit.train.user;
 import hu.bme.mit.train.interfaces.TrainController;
 import hu.bme.mit.train.interfaces.TrainUser;
 import hu.bme.mit.train.interfaces.TrainSensor;
+import java.lang.*;
+import java.text.SimpleDateFormat;  
+import java.util.Date;  
 
 public class TrainUserImpl implements TrainUser {
 	private TrainController controller;
 	private TrainSensor sensor;
 	private int joystickPosition;
 
-	public TrainUserImpl(TrainController controller) {
+	public TrainUserImpl(TrainController controller, TrainSensor sensor) {
 		this.controller = controller;
+		this.sensor = sensor;
 	}
 
 	@Override
@@ -27,6 +31,8 @@ public class TrainUserImpl implements TrainUser {
 	public void overrideJoystickPosition(int joystickPosition) {
 		this.joystickPosition = joystickPosition;
 		controller.setJoystickPosition(joystickPosition);
+		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+		sensor.addTachographValue(timeStamp, joystickPosition, controller.getReferenceSpeed());
 	}
 
 	@Override
@@ -36,6 +42,7 @@ public class TrainUserImpl implements TrainUser {
 
 	@Override
 	public void stopEmergencyBraking(){
-		controller.setSpeedLimit(sensor.getSpeedLimit());
+		controller.setReferenceSpeed(sensor.getSpeedLimit());
 	}
+
 }
