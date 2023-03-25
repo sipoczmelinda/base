@@ -10,6 +10,6 @@ public interface TrainUser {
 
 	void emergencyBraking();
 
-	void stopEmergencyBraking();
+	void stopEmergencyBraking()
 
 }
