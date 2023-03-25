@@ -53,6 +53,6 @@ public class TrainSystemTest {
 	@Test
 	public void EmergencyBraking(){
 		user.emergencyBraking();
-		Assert.assertEquals(0, sensor.getReferenceSpeed());
+		Assert.assertEquals(0, controller.getReferenceSpeed());
 	}
 }
